@@ -394,32 +394,6 @@ variable "pg_extra_params" {
   description = "Parameter keywords of the form param1=value1&param2=value2 to support additional options that may be necessary for your specific PostgreSQL server. Allowed values are documented on the PostgreSQL site. An additional restriction on the sslmode parameter is that only the require, verify-full, verify-ca, and disable values are allowed."
 }
 
-# Explorer Database
-# -----------------
-variable "explorer_db_name" {
-  default     = null
-  type        = string
-  description = "PostgreSQL instance name for Explorer."
-}
-
-variable "explorer_db_username" {
-  default     = "hashicorp"
-  type        = string
-  description = "PostgreSQL instance username for Explorer. No special characters."
-}
-
-variable "explorer_db_parameters" {
-  type        = string
-  description = "PostgreSQL server parameters for the connection URI for Explorer. Used to configure the PostgreSQL connection."
-  default     = "sslmode=require"
-}
-
-variable "explorer_db_size" {
-  type        = string
-  default     = "GP_Standard_D2s_v3"
-  description = "PostgreSQL instance size for Explorer."
-}
-
 # Load Balancer
 # -------------
 variable "load_balancer_type" {

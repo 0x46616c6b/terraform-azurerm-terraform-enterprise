@@ -136,33 +136,6 @@ module "database" {
   tags = var.tags
 }
 
-# -----------------------------------------------------------------------------
-# Azure postgres explorer database
-# -----------------------------------------------------------------------------
-module "explorer_database" {
-  source = "./modules/database"
-  count  = local.enable_explorer_database_module ? 1 : 0
-
-  friendly_name_prefix = var.friendly_name_prefix
-  resource_group_name  = module.resource_groups.resource_group_name
-  location             = var.location
-
-  database_machine_type          = var.explorer_db_size
-  database_private_dns_zone_id   = local.network.database_private_dns_zone.id
-  database_size_mb               = var.database_size_mb
-  database_subnet_id             = local.network.database_subnet.id
-  database_user                  = var.explorer_db_username
-  database_extensions            = var.database_extensions
-  database_version               = var.database_version
-  database_backup_retention_days = var.database_backup_retention_days
-  database_availability_zone     = var.database_availability_zone
-
-  database_msi_auth_enabled = var.database_msi_auth_enabled
-  user_assigned_identity    = module.vm.user_assigned_identity
-
-  tags = var.tags
-}
-
 # ---------------------------------------------------------------------------------------------------------------
 # Azure user data / cloud init used to install and configure TFE on instance(s) using Flexible Deployment Options
 # ---------------------------------------------------------------------------------------------------------------
@@ -247,12 +220,6 @@ module "runtime_container_engine_config" {
 
   database_passwordless_azure_use_msi   = var.database_msi_auth_enabled
   database_passwordless_azure_client_id = module.vm.user_assigned_identity.client_id
-
-  explorer_database_name       = local.explorer_database.name
-  explorer_database_user       = var.database_msi_auth_enabled ? module.vm.user_assigned_identity.name : local.explorer_database.server.administrator_login
-  explorer_database_password   = var.database_msi_auth_enabled ? "" : local.explorer_database.server.administrator_password
-  explorer_database_host       = local.explorer_database.address
-  explorer_database_parameters = var.explorer_db_parameters
 
   storage_type = "azure"
 

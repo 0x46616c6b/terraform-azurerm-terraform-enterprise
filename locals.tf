@@ -7,7 +7,6 @@ locals {
   # TFE Architecture
   # ----------------
   disk_mode = var.operational_mode == "disk"
-  enable_explorer_database_module = local.disk_mode == false && var.explorer_db_name != null
 
   # Network
   # -------
@@ -65,18 +64,6 @@ locals {
 
   database = try(
     module.database[0],
-    {
-      name    = null
-      address = null
-      server = {
-        administrator_login    = null
-        administrator_password = null
-      }
-    }
-  )
-
-  explorer_database = try(
-    module.explorer_database[0],
     {
       name    = null
       address = null
