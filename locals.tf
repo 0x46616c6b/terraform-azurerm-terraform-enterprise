@@ -6,7 +6,7 @@
 locals {
   # TFE Architecture
   # ----------------
-  disk_mode = var.operational_mode == "disk"
+  disk_mode                       = var.operational_mode == "disk"
   enable_explorer_database_module = local.disk_mode == false && var.explorer_db_name != null
 
   # Network
