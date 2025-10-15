@@ -143,7 +143,7 @@ module "explorer_database" {
   source = "./modules/database"
   count  = local.enable_explorer_database_module ? 1 : 0
 
-  friendly_name_prefix = var.friendly_name_prefix
+  friendly_name_prefix = "${var.friendly_name_prefix}-explorer"
   resource_group_name  = module.resource_groups.resource_group_name
   location             = var.location
 
