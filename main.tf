@@ -248,11 +248,14 @@ module "runtime_container_engine_config" {
   database_passwordless_azure_use_msi   = var.database_msi_auth_enabled
   database_passwordless_azure_client_id = module.vm.user_assigned_identity.client_id
 
-  explorer_database_name       = local.explorer_database.name
   explorer_database_user       = var.database_msi_auth_enabled ? module.vm.user_assigned_identity.name : local.explorer_database.server.administrator_login
   explorer_database_password   = var.database_msi_auth_enabled ? "" : local.explorer_database.server.administrator_password
   explorer_database_host       = local.explorer_database.address
+  explorer_database_name       = local.explorer_database.name
   explorer_database_parameters = var.explorer_db_parameters
+
+  explorer_database_passwordless_azure_use_msi   = var.database_msi_auth_enabled
+  explorer_database_passwordless_azure_client_id = module.vm.user_assigned_identity.client_id
 
   storage_type = "azure"
 
