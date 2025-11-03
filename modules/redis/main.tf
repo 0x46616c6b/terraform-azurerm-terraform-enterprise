@@ -16,8 +16,9 @@ resource "azurerm_redis_cache" "tfe_redis" {
   family    = var.redis.family
   sku_name  = var.redis.sku_name
 
-  enable_non_ssl_port = var.redis.use_tls == true ? false : true
-  minimum_tls_version = var.redis.minimum_tls_version
+  public_network_access_enabled = var.redis.public_network_access_enabled == null ? true : var.redis.public_network_access_enabled
+  enable_non_ssl_port           = var.redis.use_tls == true ? false : true
+  minimum_tls_version           = var.redis.minimum_tls_version
 
   redis_configuration {
     enable_authentication                   = var.redis.use_password_auth
